@@ -7,10 +7,10 @@ Exercise.destroy_all
 # Seed your database here
 puts "🌱 Start seeding"
 puts "Creating workouts..."
-workout_1 = Workout.create(completed_at: Time.new, started_at: Time.new + (60*10))
-workout_2 = Workout.create(completed_at: Time.new, started_at: Time.new + (60*60))
-workout_3 = Workout.create(completed_at: Time.new, started_at: Time.new + (60*15))
-workout_4 = Workout.create(completed_at: Time.new, started_at: Time.new + (1.5 * 60 * 60))
+workout_1 = Workout.create(started_at: Time.new, completed_at: Time.new + (60*10))
+workout_2 = Workout.create(started_at: Time.new, completed_at: Time.new + (60*60))
+workout_3 = Workout.create(started_at: Time.new, completed_at: Time.new + (60*15))
+workout_4 = Workout.create(started_at: Time.new, completed_at: Time.new + (1.5 * 60 * 60))
 
 
 puts "Creating exercises..."

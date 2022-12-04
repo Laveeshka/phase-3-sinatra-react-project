@@ -11,5 +11,9 @@ end
 # Parse JSON from the request body into the params hash
 use Rack::JSONBodyParser
 
+# class App < Sinatra::Base
+#   use ApplicationController
+# end
+
 # Our application
 run ApplicationController
