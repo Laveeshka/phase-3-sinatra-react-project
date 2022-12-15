@@ -7,8 +7,8 @@ class Exercise < ActiveRecord::Base
         Exercise.find_or_create_by(name: name, area: area)
     end
 
-    def self.filter_by_area(area)
-        Exercise.all.where(area: area)
-    end
+    # def self.filter_by_area(area)
+    #     Exercise.all.where(area: area)
+    # end
 
 end

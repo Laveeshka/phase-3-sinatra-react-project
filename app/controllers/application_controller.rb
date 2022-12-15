@@ -65,37 +65,43 @@ class ApplicationController < Sinatra::Base
 
   post "/workout_exercises" do
     new_workout_exercise = WorkoutExercise.add_workout_exercise(
-      params[:workout], params[:exercise]
+      params[:workout_id], params[:exercise_id]
     )
+    new_workout_exercise.to_json
   end
 
-  post "/workout_exercises/:id" do
-    workout_exercise = WorkoutExercise.find(params[:id])
-    workout_exercise.add_workout_set
+  post "/workout_sets" do
+    exercise_set = WorkoutSet.create(workout_exercise_id: params[:workout_exercise_id], weight: params[:weight], reps: params[:reps], completed: params[:completed])
+    exercise_set.to_json
   end
 
   ### PATCH routes ###
   
   patch "/workouts/:id" do
     workout = Workout.find(params[:id])
-    workout.update(completed_at: params[:completed_at])
+    workout.update(params)
+    workout.to_json(include: { workout_exercises: { include: :workout_sets } })
   end
 
   patch "/workout_sets/:id" do
     workout_set = WorkoutSet.find(params[:id])
     workout_set.update(params)
+    workout_set.to_json
   end
 
   ### DELETE routes ###
 
   delete "/workouts/:id" do
     deleted_workout = Workout.find(params[:id])
+    # deleted_workout.workout_exercises.workout_sets.destroy_all
+    # deleted_workout.wprkout_exercises.destroy_all
     deleted_workout.destroy
     deleted_workout.to_json
   end
 
   delete "/workout_exercises/:id" do
     deleted_workout_exercise = WorkoutExercise.find(params[:id])
+    deleted_workout_exercise.workout_sets.destroy_all
     deleted_workout_exercise.destroy
     deleted_workout_exercise.to_json
   end
