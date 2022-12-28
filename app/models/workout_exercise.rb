@@ -7,8 +7,4 @@ class WorkoutExercise < ActiveRecord::Base
         WorkoutExercise.find_or_create_by(workout_id: workout_id, exercise_id: exercise_id)
     end
 
-    # def add_workout_set
-    #     new_workout_set = WorkoutSet.create(weight: 0, reps: 10, completed: false, workout_exercise: self)
-    # end
-
 end

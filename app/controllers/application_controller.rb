@@ -19,20 +19,16 @@ class ApplicationController < Sinatra::Base
     workout.to_json(include: { workout_exercises: { include: :workout_sets } })
   end
 
-  get "/workouts_oldest" do
-    workouts = Workout.filter_workouts_by_oldest
-    workouts.to_json(include: { workout_exercises: { include: :workout_sets } })
-  end
-
-  get "/workouts_latest" do
-    workouts = Workout.filter_workouts_by_latest
-    workouts.to_json(include: { workout_exercises: { include: :workout_sets } })
-  end
-
   get "/exercises" do
-    exercises = Exercise.all
+    if params[:area]
+      exercises = Exercise.filter_by_area(params[:area])
+    else
+      exercises = Exercise.all
+    end
     exercises.to_json
   end
+
+  #get "/exercises/:area"
 
   get "/exercises/:id" do
     exercise = Exercise.find(params[:id])
@@ -93,8 +89,6 @@ class ApplicationController < Sinatra::Base
 
   delete "/workouts/:id" do
     deleted_workout = Workout.find(params[:id])
-    # deleted_workout.workout_exercises.workout_sets.destroy_all
-    # deleted_workout.wprkout_exercises.destroy_all
     deleted_workout.destroy
     deleted_workout.to_json
   end
